@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <item android:title="@string/your_chats">
+        <menu>
+            <item
+                android:id="@+id/find"
+                android:icon="?android:attr/actionModeFindDrawable"
+                android:onClick="showContent"
+                android:title="@string/find_chat" />
+            <item
+                android:id="@+id/chats"
+                android:icon="@android:drawable/stat_notify_chat"
+                android:onClick="showChats"
+                android:title="Your chats" />
+        </menu>
+    </item>
+
+</menu>
