@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<ConstraintLayout>(R.id.content).visibility = ConstraintLayout.GONE
         findViewById<ConstraintLayout>(R.id.chat).visibility = ConstraintLayout.VISIBLE
         findViewById<LinearLayout>(R.id.chats).visibility = LinearLayout.GONE
-        onChangeListener(chatRef.child(chat))
+//        onChangeListener(chatRef.child(chat))
     }
 
     // показать окошко, где размещены все чаты
@@ -128,29 +128,30 @@ class MainActivity : AppCompatActivity() {
     fun sendMessage(view: View){ // отправка сообщения в базу
         val text = findViewById<EditText>(R.id.editText).text.toString()
         if (text.isNotEmpty()){
-            val time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:MM:ss"))
-            val list = mapOf("from" to auth.uid.toString(), "message" to text)
-            chatRef.child(chat).child(time).updateChildren(list)
-            findViewById<EditText>(R.id.editText).setText("")
+            chatRef.child(chat).setValue(Message(text, auth.uid))
+//            val time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:MM:ss"))
+//            val list = mapOf("from" to auth.uid.toString(), "message" to text)
+//            chatRef.child(chat).child(time).updateChildren(list)
         }
     }
 
     //  слушаем изминения в базе
-    private fun onChangeListener(dRef: DatabaseReference){
-        dRef.addChildEventListener(object: ChildEventListener{
-            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                users.get().addOnSuccessListener {
-                    if (snapshot.child("from").value == auth.uid.toString())
-                        findViewById<TextView>(R.id.textChatView).append("    ${it.child(auth.uid.toString()).child("name").value}: ${snapshot.child("message").value}\n\n")
-                    else
-                        findViewById<TextView>(R.id.textChatView).append("    ${it.child(it.child(auth.uid.toString()).child("chats").child(chat).value.toString()).child("name").value}: ${snapshot.child("message").value}\n\n")
-                }
-            }
-            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
-            override fun onChildRemoved(snapshot: DataSnapshot) {}
-            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
-            override fun onCancelled(error: DatabaseError) {}
-        })
-
-    }
+//    private fun onChangeListener(dRef: DatabaseReference){
+//        val listView = findViewById<ListView>(R.id.MessageList)
+//        dRef.addChildEventListener(object: ChildEventListener{
+//            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+//                users.get().addOnSuccessListener {
+//                    if (snapshot.child("from").value == auth.uid.toString())
+//                        findViewById<TextView>(R.id.textChatView).append("    ${it.child(auth.uid.toString()).child("name").value}: ${snapshot.child("message").value}\n\n")
+//                    else
+//                        findViewById<TextView>(R.id.textChatView).append("    ${it.child(it.child(auth.uid.toString()).child("chats").child(chat).value.toString()).child("name").value}: ${snapshot.child("message").value}\n\n")
+//                }
+//            }
+//            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
+//            override fun onChildRemoved(snapshot: DataSnapshot) {}
+//            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
+//            override fun onCancelled(error: DatabaseError) {}
+//        })
+//
+//    }
 }
