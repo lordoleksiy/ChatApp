@@ -12,11 +12,14 @@
         <entry key="..\:/Programming/Android/ChatApp/app/src/main/res/drawable/message_text_back.xml" value="0.1685" />
         <entry key="..\:/Programming/Android/ChatApp/app/src/main/res/drawable/messagebox_back.xml" value="0.1685" />
         <entry key="..\:/Programming/Android/ChatApp/app/src/main/res/drawable/side_nav_bar.xml" value="0.1525" />
+        <entry key="..\:/Programming/Android/ChatApp/app/src/main/res/layout/activity_chat.xml" value="0.13541666666666666" />
         <entry key="..\:/Programming/Android/ChatApp/app/src/main/res/layout/activity_chat_menu.xml" value="0.264" />
         <entry key="..\:/Programming/Android/ChatApp/app/src/main/res/layout/activity_main.xml" value="0.176" />
         <entry key="..\:/Programming/Android/ChatApp/app/src/main/res/layout/activity_register.xml" value="0.176" />
+        <entry key="..\:/Programming/Android/ChatApp/app/src/main/res/layout/activity_test.xml" value="0.14791666666666667" />
         <entry key="..\:/Programming/Android/ChatApp/app/src/main/res/layout/app_bar_chat_menu.xml" value="0.176" />
         <entry key="..\:/Programming/Android/ChatApp/app/src/main/res/layout/chat.xml" value="0.17083333333333334" />
+        <entry key="..\:/Programming/Android/ChatApp/app/src/main/res/layout/chat_header.xml" value="0.17239583333333333" />
         <entry key="..\:/Programming/Android/ChatApp/app/src/main/res/layout/content_chat_menu.xml" value="0.152" />
         <entry key="..\:/Programming/Android/ChatApp/app/src/main/res/layout/fragment_gallery.xml" value="0.14270833333333333" />
         <entry key="..\:/Programming/Android/ChatApp/app/src/main/res/layout/fragment_home.xml" value="0.14270833333333333" />
@@ -24,7 +27,10 @@
         <entry key="..\:/Programming/Android/ChatApp/app/src/main/res/layout/header.xml" value="0.264" />
         <entry key="..\:/Programming/Android/ChatApp/app/src/main/res/layout/list_item.xml" value="0.1765625" />
         <entry key="..\:/Programming/Android/ChatApp/app/src/main/res/layout/nav_header_chat_menu.xml" value="0.2" />
+        <entry key="..\:/Programming/Android/ChatApp/app/src/main/res/layout/received.xml" value="0.6" />
+        <entry key="..\:/Programming/Android/ChatApp/app/src/main/res/layout/sent.xml" value="0.4" />
         <entry key="..\:/Programming/Android/ChatApp/app/src/main/res/menu/activity_main_drawer.xml" value="0.4" />
+        <entry key="..\:/Programming/Android/ChatApp/app/src/main/res/menu/nav_chat_menu.xml" value="0.25" />
         <entry key="..\:/Programming/Android/ChatApp/app/src/main/res/menu/nav_menu.xml" value="0.4" />
         <entry key="..\:/Programming/Android/ChatApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.141" />
         <entry key="..\:/Programming/Android/ChatApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.141" />

@@ -1,25 +1,19 @@
 package com.example.chatapp
 
 import android.annotation.SuppressLint
-import android.os.Build
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
-import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.GravityCompat
-import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 class MainActivity : AppCompatActivity() {
     @SuppressLint("ResourceType")
@@ -71,32 +65,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun changeView(){
-        val cLayout = findViewById<ConstraintLayout>(R.id.content)
-        val chatLayout = findViewById<ConstraintLayout>(R.id.chat)
-        if (cLayout.isVisible){
-            cLayout.visibility = ConstraintLayout.GONE
-            chatLayout.visibility = ConstraintLayout.VISIBLE
-        }
-        else{
-            cLayout.visibility = ConstraintLayout.VISIBLE
-            chatLayout.visibility = ConstraintLayout.GONE
-        }
-    }
-
     // окошко с выбором новой переписки
     fun showContent(item: MenuItem) {
         findViewById<ConstraintLayout>(R.id.content).visibility = ConstraintLayout.VISIBLE
-        findViewById<ConstraintLayout>(R.id.chat).visibility = ConstraintLayout.GONE
         findViewById<LinearLayout>(R.id.chats).visibility = LinearLayout.GONE
     }
 
     // окошко где переписка
-    fun showChat(){
-        findViewById<ConstraintLayout>(R.id.content).visibility = ConstraintLayout.GONE
-        findViewById<ConstraintLayout>(R.id.chat).visibility = ConstraintLayout.VISIBLE
-        findViewById<LinearLayout>(R.id.chats).visibility = LinearLayout.GONE
-//        onChangeListener(chatRef.child(chat))
+    private fun showChat(){
+        val intent = Intent(this, Chat::class.java)
+        intent.putExtra("chat", chat)
+        startActivity(intent)
     }
 
     // показать окошко, где размещены все чаты
@@ -104,7 +83,6 @@ class MainActivity : AppCompatActivity() {
     fun showChats(item: MenuItem) {
         findViewById<ConstraintLayout>(R.id.content).visibility = ConstraintLayout.GONE
         findViewById<LinearLayout>(R.id.chats).visibility = LinearLayout.VISIBLE
-        findViewById<ConstraintLayout>(R.id.chat).visibility = ConstraintLayout.GONE
         val chatsLayout = findViewById<LinearLayout>(R.id.chats)
         users.get().addOnSuccessListener {
             it.child(auth.uid.toString()).child("chats").children.forEach { chat ->
@@ -121,17 +99,6 @@ class MainActivity : AppCompatActivity() {
                 if (chatsLayout.childCount < it.child(auth.uid.toString()).child("chats").childrenCount)
                     chatsLayout.addView(textView)
             }
-        }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun sendMessage(view: View){ // отправка сообщения в базу
-        val text = findViewById<EditText>(R.id.editText).text.toString()
-        if (text.isNotEmpty()){
-            chatRef.child(chat).setValue(Message(text, auth.uid))
-//            val time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:MM:ss"))
-//            val list = mapOf("from" to auth.uid.toString(), "message" to text)
-//            chatRef.child(chat).child(time).updateChildren(list)
         }
     }
 
