@@ -7,7 +7,7 @@
             <item
                 android:id="@+id/find"
                 android:icon="?android:attr/actionModeFindDrawable"
-                android:onClick="showContent"
+                android:onClick="showMenu"
                 android:title="@string/find_chat" />
             <item
                 android:id="@+id/chats"

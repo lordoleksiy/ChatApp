@@ -1,7 +1,6 @@
 package com.example.chatapp
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
@@ -10,6 +9,8 @@ import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
@@ -19,17 +20,32 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("ResourceType")
     private val database = Firebase.database
     private val users = database.getReference("users")
-    private val chatRef = database.getReference("chats")
-    private val waiting = database.getReference("waiting")
     private lateinit var chat:String
+    private val waiting = database.getReference("waiting")
+    private val chatRef = database.getReference("chats")
     lateinit var auth: FirebaseAuth
     lateinit var name:String
+    @SuppressLint("ResourceAsColor", "NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         auth = Firebase.auth
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.icon1svg)
+
+        val usersList = ArrayList<ChatElement>()
+        val chatAdapter = ChatAdapter(this, usersList)
+
+        val chatRecyclerView = findViewById<RecyclerView>(R.id.listOfchats)
+        chatRecyclerView.layoutManager = LinearLayoutManager(this)
+        chatRecyclerView.adapter = chatAdapter
+
+        users.get().addOnSuccessListener {
+            it.child(auth.uid.toString()).child("chats").children.forEach { chat ->
+                usersList.add(ChatElement(it.child(chat.value.toString()).child("name").value.toString(), chat.key.toString()))
+                chatAdapter.notifyDataSetChanged()
+            }
+        }
     }
 
     // выдвигаем/задвигам навигатион тул
@@ -44,6 +60,17 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return true
+    }
+
+    // окошко с выбором новой переписки
+    fun showMenu(item: MenuItem) {
+        findViewById<ConstraintLayout>(R.id.content).visibility = ConstraintLayout.VISIBLE
+        findViewById<RecyclerView>(R.id.listOfchats).visibility = RecyclerView.GONE
+    }
+
+    fun showChats(item: MenuItem) {
+        findViewById<ConstraintLayout>(R.id.content).visibility = ConstraintLayout.GONE
+        findViewById<RecyclerView>(R.id.listOfchats).visibility = RecyclerView.VISIBLE
     }
 
     // найти человека по интересам
@@ -64,61 +91,4 @@ class MainActivity : AppCompatActivity() {
                 waiting.child("AlcoPerson").setValue(auth.uid)
         }
     }
-
-    // окошко с выбором новой переписки
-    fun showContent(item: MenuItem) {
-        findViewById<ConstraintLayout>(R.id.content).visibility = ConstraintLayout.VISIBLE
-        findViewById<LinearLayout>(R.id.chats).visibility = LinearLayout.GONE
-    }
-
-    // окошко где переписка
-    private fun showChat(){
-        val intent = Intent(this, Chat::class.java)
-        intent.putExtra("chat", chat)
-        startActivity(intent)
-    }
-
-    // показать окошко, где размещены все чаты
-    @SuppressLint("CutPasteId", "ResourceAsColor")
-    fun showChats(item: MenuItem) {
-        findViewById<ConstraintLayout>(R.id.content).visibility = ConstraintLayout.GONE
-        findViewById<LinearLayout>(R.id.chats).visibility = LinearLayout.VISIBLE
-        val chatsLayout = findViewById<LinearLayout>(R.id.chats)
-        users.get().addOnSuccessListener {
-            it.child(auth.uid.toString()).child("chats").children.forEach { chat ->
-                val textView = TextView(this)
-//                textView.width = ViewGroup.LayoutParams.MATCH_PARENT
-                textView.text = it.child(chat.value.toString()).child("name").value as CharSequence?
-                textView.textSize = 24f
-                textView.height = 150
-                textView.setBackgroundColor(R.color.black)
-                textView.setOnClickListener {
-                    this.chat = chat.key.toString()
-                    showChat()
-                }
-                if (chatsLayout.childCount < it.child(auth.uid.toString()).child("chats").childrenCount)
-                    chatsLayout.addView(textView)
-            }
-        }
-    }
-
-    //  слушаем изминения в базе
-//    private fun onChangeListener(dRef: DatabaseReference){
-//        val listView = findViewById<ListView>(R.id.MessageList)
-//        dRef.addChildEventListener(object: ChildEventListener{
-//            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-//                users.get().addOnSuccessListener {
-//                    if (snapshot.child("from").value == auth.uid.toString())
-//                        findViewById<TextView>(R.id.textChatView).append("    ${it.child(auth.uid.toString()).child("name").value}: ${snapshot.child("message").value}\n\n")
-//                    else
-//                        findViewById<TextView>(R.id.textChatView).append("    ${it.child(it.child(auth.uid.toString()).child("chats").child(chat).value.toString()).child("name").value}: ${snapshot.child("message").value}\n\n")
-//                }
-//            }
-//            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
-//            override fun onChildRemoved(snapshot: DataSnapshot) {}
-//            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
-//            override fun onCancelled(error: DatabaseError) {}
-//        })
-//
-//    }
 }

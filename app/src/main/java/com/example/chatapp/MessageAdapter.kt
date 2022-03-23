@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-class MessageAdapter(val context:Context, val messageList:ArrayList<Message>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MessageAdapter(val context:Context, val messageList: ArrayList<ChatMessage>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     val ITEM_SENT = 1
     val ITEM_RECEIVE = 0
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
