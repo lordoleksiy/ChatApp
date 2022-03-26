@@ -2,7 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
-    <item android:title="@string/your_chats">
+    <item
+        android:id="@+id/title"
+        android:title="ChatApp">
         <menu>
             <item
                 android:id="@+id/find"
@@ -14,6 +16,11 @@
                 android:icon="@android:drawable/stat_notify_chat"
                 android:onClick="showChats"
                 android:title="Your chats" />
+            <item
+                android:id="@+id/inform"
+                android:icon="@android:drawable/ic_menu_help"
+                android:onClick="getHelp"
+                android:title="Help" />
         </menu>
     </item>
 

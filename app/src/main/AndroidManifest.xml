@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat">
         <activity
+            android:name=".Help"
+            android:exported="false" />
+        <activity
             android:name=".FindMenu"
             android:exported="false" />
         <activity

@@ -17,7 +17,7 @@
         android:id="@+id/chatElementBody"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="#5C4646"
+        android:background="#736767"
         app:layout_constraintBottom_toTopOf="@+id/view2"
         app:layout_constraintTop_toBottomOf="@+id/view">
 
@@ -25,6 +25,9 @@
             android:id="@+id/textName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/message_text_back"
+            android:backgroundTint="#CD9999"
+            android:padding="5dp"
             android:text="Name"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -35,8 +38,12 @@
 
         <ImageView
             android:id="@+id/imageView7"
-            android:layout_width="65dp"
+            android:layout_width="52dp"
             android:layout_height="52dp"
+            android:layout_marginStart="24dp"
+            android:background="@drawable/frame"
+            android:backgroundTint="#CD9999"
+            android:padding="1dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

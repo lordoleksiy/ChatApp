@@ -50,11 +50,11 @@ class MessageAdapter(val context:Context, val messageList: ArrayList<ChatMessage
     }
 
     class SentViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        val sentMessage: TextView = itemView.findViewById<TextView>(R.id.message_text)
+        val sentMessage: TextView = itemView.findViewById<TextView>(R.id.message_text3)
         val sentTime: TextView = itemView.findViewById<TextView>(R.id.message_time)
     }
     class ReceiveViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        val receiveMessage:TextView = itemView.findViewById<TextView>(R.id.message_text)
+        val receiveMessage:TextView = itemView.findViewById<TextView>(R.id.message_text3)
         val receiveTime:TextView = itemView.findViewById<TextView>(R.id.message_time)
     }
 
